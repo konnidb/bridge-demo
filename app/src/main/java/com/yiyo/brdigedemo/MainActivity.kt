@@ -1,7 +1,12 @@
 package com.yiyo.brdigedemo
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.webkit.JavascriptInterface
+import android.webkit.WebView
 import android.widget.TextView
 import bridgedb.NetworkNode
 import com.yiyo.brdigedemo.bridgedb.AuthCredentials
@@ -10,6 +15,7 @@ import com.yiyo.brdigedemo.bridgedb.GraphDto
 import de.blox.graphview.Edge
 import de.blox.graphview.Graph
 import de.blox.graphview.Node
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var graphDto: GraphDto
@@ -18,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        val wifiManager = this.getSystemService(Context.WIFI_SERVICE) as Wif
     }
 
     override fun onResume() {
@@ -30,6 +37,14 @@ class MainActivity : AppCompatActivity() {
         var txtview = findViewById<TextView>(R.id.text)
         txtview.text = dbBlocking.token
         this.graphDto = dbBlocking.getGraph()
+        for (n in graphDto.nodes) {
+            println(n.id.toString() + ": NODE")
+        }
+        val jsInterface = JSInterface(this.graphDto)
+        val webshida = findViewById<WebView>(R.id.webshida)
+        webshida.addJavascriptInterface(jsInterface, "Android")
+        webshida.loadUrl("file:///android_asset/web/index.html")
+
     }
 
     fun getNodesFromEdges() {
@@ -65,5 +80,9 @@ class MainActivity : AppCompatActivity() {
             appendableString = appendableString + key + ":" + node.fieldsMap[key] + "\n"
         }
         return appendableString
+    }
+
+    fun onPressCreateNode(v: View) {
+
     }
 }
