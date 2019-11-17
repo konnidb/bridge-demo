@@ -8,6 +8,7 @@ import bridgedb.NetworkEdge
 import bridgedb.NetworkEdgeOrBuilder
 import bridgedb.NetworkNode
 import com.yiyo.brdigedemo.bridgedb.BridgeDbBlocking
+import kotlinx.android.synthetic.main.activity_create_rel.*
 
 class CreateRelActivity : AppCompatActivity() {
 
@@ -25,8 +26,11 @@ class CreateRelActivity : AppCompatActivity() {
         }
         val destinationId = destEditText.text.toString()
         val originId = originEditText.text.toString()
+        val fields = mutableMapOf<String, String>()
+        fields["weight"] = weightEditText.text.toString()
         val db = MainActivity.dbBlocking
         val edge = NetworkEdge.newBuilder()
+            .putAllFields(fields)
             .setDestination(NetworkNode.newBuilder().setId(destinationId.toLong()).build())
             .setOrigin(NetworkNode.newBuilder().setId(originId.toLong()).build())
             .build()

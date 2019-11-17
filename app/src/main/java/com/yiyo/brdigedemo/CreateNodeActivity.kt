@@ -3,13 +3,14 @@ package com.yiyo.brdigedemo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 
 class CreateNodeActivity : AppCompatActivity() {
-
+    var fields = mutableListOf<Pair<EditText, EditText>>()
     lateinit var keysList: List<EditText>
     lateinit var valsList: List<EditText>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +27,12 @@ class CreateNodeActivity : AppCompatActivity() {
         keyField.hint = "Field name"
         valField.hint = "Value"
         val layout = findViewById<ConstraintLayout>(R.id.createNodeLayout)
-        keyField.layoutParams = ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.MATCH_PARENT)
-        layout.addView(keyField)
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(layout)
-        constraintSet.connect(keyField.id, ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 15)
-        constraintSet.applyTo(layout)
+        val p = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        keyField.layoutParams = p
+        valField.layoutParams = p
+        fields.add(Pair(keyField, valField))
+
+
     }
 
 }
