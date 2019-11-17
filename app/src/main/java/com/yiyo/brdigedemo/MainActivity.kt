@@ -5,22 +5,21 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.webkit.JavascriptInterface
-import android.webkit.WebView
 import android.widget.TextView
+import bridgedb.NetworkEdge
 import bridgedb.NetworkNode
 import com.yiyo.brdigedemo.bridgedb.AuthCredentials
 import com.yiyo.brdigedemo.bridgedb.BridgeDbBlocking
 import com.yiyo.brdigedemo.bridgedb.GraphDto
-import de.blox.graphview.Edge
 import de.blox.graphview.Graph
 import de.blox.graphview.Node
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        lateinit var dbBlocking: BridgeDbBlocking
+    }
     lateinit var graphDto: GraphDto
-
-    lateinit var dbBlocking: BridgeDbBlocking
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,11 +39,6 @@ class MainActivity : AppCompatActivity() {
         for (n in graphDto.nodes) {
             println(n.id.toString() + ": NODE")
         }
-        val jsInterface = JSInterface(this.graphDto)
-        val webshida = findViewById<WebView>(R.id.webshida)
-        webshida.addJavascriptInterface(jsInterface, "Android")
-        webshida.loadUrl("file:///android_asset/web/index.html")
-
     }
 
     fun getNodesFromEdges() {
@@ -83,6 +77,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onPressCreateNode(v: View) {
+        val intent =  Intent(this, CreateNodeActivity::class.java)
+        startActivity(intent)
+    }
 
+    fun onPressCreateRel(v: View) {
+        val intent = Intent(this, CreateRelActivity::class.java)
+        startActivity(intent)
     }
 }
