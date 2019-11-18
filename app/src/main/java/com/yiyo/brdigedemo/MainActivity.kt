@@ -18,8 +18,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     companion object {
         lateinit var dbBlocking: BridgeDbBlocking
+        lateinit var graphDto: GraphDto
+
     }
-    lateinit var graphDto: GraphDto
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         println(dbBlocking.token)
         var txtview = findViewById<TextView>(R.id.text)
         txtview.text = dbBlocking.token
-        this.graphDto = dbBlocking.getGraph()
+        graphDto = dbBlocking.getGraph()
         for (n in graphDto.nodes) {
             println(n.id.toString() + ": NODE")
         }
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         val layoutNodes = mutableMapOf<Long, Node>()
         var graph: Graph = Graph()
 
-        for (edge in this.graphDto.edges) {
+        for (edge in graphDto.edges) {
             val originNode = edge.origin
             val destinationNode = edge.destination
             var layOrNode: Node
@@ -97,6 +98,11 @@ class MainActivity : AppCompatActivity() {
 
     fun onPressDelEdge(v: View) {
         val intent = Intent(this, DeleteEdgeActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onPressGraph(v: View) {
+        val intent = Intent(this, GraphActivity::class.java)
         startActivity(intent)
     }
 }
