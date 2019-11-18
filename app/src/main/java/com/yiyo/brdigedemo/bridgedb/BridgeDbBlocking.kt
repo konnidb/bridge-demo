@@ -18,59 +18,65 @@ class BridgeDbBlocking(
     }
 
     fun createSession() {
-        val createSessionRequest = SessionRequest.newBuilder()
+        /*0val createSessionRequest = SessionRequest.newBuilder()
             .setUsername(credentials.username)
             .setDatabase(credentials.database)
             .setPassword(credentials.password)
             .setGraph(credentials.graph)
             .build()
         val session = stub.createSession(createSessionRequest)
-        token = session.token
+        token = session.token*/
     }
 
-    fun createNode(node: NetworkNode): NetworkNode {
-        val createNodeReq = CreateNodeReq.newBuilder().setToken(token)
+    fun createNode(node: NetworkNode): NetworkNode? {
+        /*val createNodeReq = CreateNodeReq.newBuilder().setToken(token)
             .setNode(node)
             .build()
 
         val response = stub.createNode(createNodeReq)
-        return response.node
+        return response.node*/
+        return null
     }
 
-    fun searchNode(nodeId: Long): NetworkNode {
-        val networkNode = NetworkNode.newBuilder().setId(nodeId).build()
+    fun searchNode(nodeId: Long): NetworkNode? {
+        /*val networkNode = NetworkNode.newBuilder().setId(nodeId).build()
         val searchNodeReq = SearchNodeReq.newBuilder().setToken(token).setNode(networkNode).build()
 
         val response = stub.searchNode(searchNodeReq)
-        return response.getNodes(0);
+        return response.getNodes(0);*/
+        return null
     }
 
-    fun searchNodes(node: NetworkNode): List<NetworkNode> {
-        val searchNodeReq = SearchNodeReq.newBuilder().setToken(token).setNode(node).build()
+    fun searchNodes(node: NetworkNode): List<NetworkNode>? {
+        /*val searchNodeReq = SearchNodeReq.newBuilder().setToken(token).setNode(node).build()
 
         val response = stub.searchNode(searchNodeReq)
-        return response.nodesList
+        return response.nodesList*/
+        return null
     }
 
-    fun deleteNode(nodeId: Long): NetworkNode {
-        val deleteNodeReq = DeleteNodeReq.newBuilder().setToken(token)
+    fun deleteNode(nodeId: Long): NetworkNode? {
+        /*val deleteNodeReq = DeleteNodeReq.newBuilder().setToken(token)
             .setNodeId(nodeId).build()
         val response = stub.deleteNode(deleteNodeReq)
-        return response.node
+        return response.node*/
+        return null
     }
 
-    fun createEdge(edge: NetworkEdge): NetworkEdge {
-        val createEdgeReq = CreateEdgeReq.newBuilder()
+    fun createEdge(edge: NetworkEdge): NetworkEdge? {
+       /* val createEdgeReq = CreateEdgeReq.newBuilder()
             .setToken(token)
             .setEdge(edge)
             .build()
         val response = stub.createEdge(createEdgeReq)
-        return response.edge
+        return response.edge*/
+        return null
     }
 
-    fun getGraph(): GraphDto {
-        val request = NetworkGraphRequest.newBuilder().setToken(token).build()
+    fun getGraph(): GraphDto? {
+        /*val request = NetworkGraphRequest.newBuilder().setToken(token).build()
         val response = stub.getGraph(request)
-        return GraphDto(response.nodesList, response.edgesList)
+        return GraphDto(response.nodesList, response.edgesList)*/
+        return null
     }
 }

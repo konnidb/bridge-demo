@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val authCredentials = AuthCredentials("root", "qwe", "other", "other")
+        /*val authCredentials = AuthCredentials("root", "qwe", "other", "other")
         dbBlocking = BridgeDbBlocking(authCredentials, "10.0.2.2", 5000)//"169.254.239.4", 5000)
         dbBlocking.connect()
         dbBlocking.createSession()
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         this.graphDto = dbBlocking.getGraph()
         for (n in graphDto.nodes) {
             println(n.id.toString() + ": NODE")
-        }
+        }*/
     }
 
     fun getNodesFromEdges() {
@@ -76,6 +76,11 @@ class MainActivity : AppCompatActivity() {
         return appendableString
     }
 
+    fun onPressListNodes(v: View) {
+        val intent =  Intent(this, ListNodesActivity::class.java)
+        startActivity(intent)
+    }
+
     fun onPressCreateNode(v: View) {
         val intent =  Intent(this, CreateNodeActivity::class.java)
         startActivity(intent)
@@ -83,6 +88,16 @@ class MainActivity : AppCompatActivity() {
 
     fun onPressCreateRel(v: View) {
         val intent = Intent(this, CreateRelActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onPressDelNode(v: View) {
+        val intent = Intent(this, DeleteNodeActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onPressDelEdge(v: View) {
+        val intent = Intent(this, DeleteEdgeActivity::class.java)
         startActivity(intent)
     }
 }
