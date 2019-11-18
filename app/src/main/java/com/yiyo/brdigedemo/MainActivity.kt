@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val authCredentials = AuthCredentials("root", "qwe", "other", "other")
+        val authCredentials = AuthCredentials("root", "qwe", "test", "test")
         dbBlocking = BridgeDbBlocking(authCredentials, "10.0.2.2", 5000)//"169.254.239.4", 5000)
         dbBlocking.connect()
         dbBlocking.createSession()
@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
     fun getNodesFromEdges() {
         val layoutNodes = mutableMapOf<Long, Node>()
-        var nodeIds = listOf<Long>()
         var graph: Graph = Graph()
 
         for (edge in this.graphDto.edges) {

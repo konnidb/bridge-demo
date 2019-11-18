@@ -4,10 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import bridgedb.NetworkEdge
-import bridgedb.NetworkEdgeOrBuilder
 import bridgedb.NetworkNode
-import com.yiyo.brdigedemo.bridgedb.BridgeDbBlocking
 import kotlinx.android.synthetic.main.activity_create_rel.*
 
 class CreateRelActivity : AppCompatActivity() {
@@ -29,12 +28,19 @@ class CreateRelActivity : AppCompatActivity() {
         val fields = mutableMapOf<String, String>()
         fields["weight"] = weightEditText.text.toString()
         val db = MainActivity.dbBlocking
+        println("$destinationId DESTINATION ID")
+        println(originId.toLong())
+        val originNode = NetworkNode.newBuilder().setId(originId.toLong()).build()
+        val destinationNode = NetworkNode.newBuilder().setId(destinationId.toLong()).build()
         val edge = NetworkEdge.newBuilder()
             .putAllFields(fields)
-            .setDestination(NetworkNode.newBuilder().setId(destinationId.toLong()).build())
-            .setOrigin(NetworkNode.newBuilder().setId(originId.toLong()).build())
+            .setDestination(destinationNode)
+            .setOrigin(originNode)
             .build()
-        db.createEdge(edge)
+        val edge1 = db.createEdge(edge)
+        Toast.makeText(this, "Test Text", Toast.LENGTH_SHORT).show()
+
+        this.finish()
     }
 
 }
