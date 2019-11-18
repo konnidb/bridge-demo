@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView
 class CreateNodeActivity : AppCompatActivity() {
     lateinit var submitBtn: Button
     lateinit var addFieldBtn: Button
+    lateinit var viewManager: LinearLayoutManager
+    lateinit var viewAdapter: FieldRowAdapter
     companion object {
-        var fields = mutableListOf<Pair<EditText, EditText>>()
+        var fields = mutableListOf<Pair<String, String>>()
     }
     lateinit var fieldsRecyclerView: RecyclerView
     lateinit var keysList: List<EditText>
@@ -30,18 +32,19 @@ class CreateNodeActivity : AppCompatActivity() {
         submitBtn = findViewById(R.id.submitCreateNode)
         addFieldBtn = findViewById(R.id.addFieldBtn)
         fieldsRecyclerView = findViewById(R.id.fieldRowsRecyclerView)
-    }
-
-    fun addField(v: View) {
         val constraintLayout = findViewById<ConstraintLayout>(R.id.createNodeLayout)
-        val viewManager = LinearLayoutManager(this)
-        val viewAdapter = FieldRowAdapter(this, mutableListOf<Pair<String, String>>())
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = FieldRowAdapter(this, fields)
         fieldsRecyclerView.apply {
             setHasFixedSize(false)
             layoutManager = viewManager
             adapter = viewAdapter
         }
+    }
 
+    fun addField(v: View) {
+        fields.add(Pair("", ""))
+        viewAdapter.notifyDataSetChanged()
 
     }
 
@@ -52,25 +55,27 @@ class CreateNodeActivity : AppCompatActivity() {
 
 public class FieldRowAdapter(
         val context: Context,
-        val dataSet: MutableList<Pair<String, String>>,
-        val listenerPair: Pair<FieldRowListener, FieldRowListener>
+        val dataSet: MutableList<Pair<String, String>>
     ):
     RecyclerView.Adapter<FieldRowViewHolder>() {
     override fun getItemCount() = dataSet.size
 
     override fun onBindViewHolder(holder: FieldRowViewHolder, position: Int) {
-        holder
+        holder.listenerPair.first.position = holder.adapterPosition
+        holder.listenerPair.second.position = holder.adapterPosition
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FieldRowViewHolder {
         val viewShida = LayoutInflater.from(parent.context).inflate(R.layout.field_row, parent, false)
-        FieldRowViewHolder(viewShida)
-        return FieldRowViewHolder(viewShida)
+        val keyListener = FieldRowListener()
+        val valueListener = FieldRowListener()
+        return FieldRowViewHolder(viewShida, Pair(keyListener, valueListener))
     }
 
 }
 
 class FieldRowListener: TextWatcher {
+    var position = -1
     override fun afterTextChanged(p0: Editable?) {
 
     }
@@ -80,6 +85,10 @@ class FieldRowListener: TextWatcher {
     }
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+    }
+
+    fun changePosition(position: Int) {
 
     }
 
