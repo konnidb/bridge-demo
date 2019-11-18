@@ -69,6 +69,7 @@ dependencies {
     implementation 'javax.annotation:javax.annotation-api:1.2'
     implementation 'de.blox:graphview:0.6.0'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'de.blox:graphview:0.6.0'
 
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

@@ -100,4 +100,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, DeleteEdgeActivity::class.java)
         startActivity(intent)
     }
+
+    fun onPressGraph(v: View) {
+        val intent = Intent(this, GraphActivity::class.java)
+        startActivity(intent)
+    }
 }
