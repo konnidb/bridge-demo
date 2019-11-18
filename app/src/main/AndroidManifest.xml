@@ -12,7 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateRelActivity"></activity>
+        <activity android:name=".DeleteEdgeActivity"></activity>
+        <activity android:name=".DeleteNodeActivity" />
+        <activity android:name=".NodeDetailsActivity" />
+        <activity android:name=".ListNodesActivity" />
+        <activity android:name=".CreateRelActivity" />
         <activity android:name=".CreateNodeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -75,6 +75,11 @@ class MainActivity : AppCompatActivity() {
         return appendableString
     }
 
+    fun onPressListNodes(v: View) {
+        val intent =  Intent(this, ListNodesActivity::class.java)
+        startActivity(intent)
+    }
+
     fun onPressCreateNode(v: View) {
         val intent =  Intent(this, CreateNodeActivity::class.java)
         startActivity(intent)
@@ -82,6 +87,16 @@ class MainActivity : AppCompatActivity() {
 
     fun onPressCreateRel(v: View) {
         val intent = Intent(this, CreateRelActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onPressDelNode(v: View) {
+        val intent = Intent(this, DeleteNodeActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onPressDelEdge(v: View) {
+        val intent = Intent(this, DeleteEdgeActivity::class.java)
         startActivity(intent)
     }
 }

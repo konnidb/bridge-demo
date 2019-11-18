@@ -39,4 +39,46 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/createNode" />
 
+    <Button
+        android:id="@+id/ListNodesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
+        android:onClick="onPressListNodes"
+        android:text="Listar Nodos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DeleteNodeBtn" />
+
+    <Button
+        android:id="@+id/DeleteNodeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="356dp"
+        android:onClick="onPressDelNode"
+        android:text="Eliminar Nodo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/DelereEdge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="onPressDelNode"
+        android:text="Eliminar Relación"
+        app:layout_constraintBottom_toTopOf="@+id/createRel"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!--<WebView
+        android:id="@+id/webview"
+        android:layout_width="409dp"
+        android:layout_height="354dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" /> -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
