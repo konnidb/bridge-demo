@@ -25,10 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 //        val wifiManager = this.getSystemService(Context.WIFI_SERVICE) as Wif
-    }
-
-    override fun onResume() {
-        super.onResume()
         val authCredentials = AuthCredentials("root", "qwe", "test", "test")
         dbBlocking = BridgeDbBlocking(authCredentials, "10.0.2.2", 5000)//"169.254.239.4", 5000)
         dbBlocking.connect()

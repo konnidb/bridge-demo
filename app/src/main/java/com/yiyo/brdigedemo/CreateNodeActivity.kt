@@ -57,14 +57,18 @@ class CreateNodeActivity : AppCompatActivity() {
         submitBtn.isEnabled = false
         val list = listOf<ContentValues>()
         val networkNodeBuilder = NetworkNode.newBuilder()
-        val properties = networkNodeBuilder.fieldsMap
+        val properties = mutableMapOf<String, String>()
         for (i in 0 until keys.size) {
             val view = fieldsRecyclerView.getChildAt(i)
             val keyEditText = view.findViewById<EditText>(R.id.field)
             val valueEditText = view.findViewById<EditText>(R.id.value)
             properties[keyEditText.text.toString()] = valueEditText.text.toString()
         }
-        val nodeResult = MainActivity.dbBlocking.createNode(networkNodeBuilder.build())
+        val nodeResult = MainActivity.dbBlocking.createNode(
+            networkNodeBuilder
+                .putAllFields(properties)
+                .build()
+        )
         Toast.makeText(this, "Node ID: " + nodeResult.id.toString(), Toast.LENGTH_SHORT).show()
 
     }
