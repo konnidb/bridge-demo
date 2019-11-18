@@ -1,5 +1,6 @@
 package com.yiyo.brdigedemo
 
+import android.content.ContentValues
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,10 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import bridgedb.NetworkEdge
+import bridgedb.NetworkNode
+import com.google.gson.Gson
 
 class CreateNodeActivity : AppCompatActivity() {
     lateinit var submitBtn: Button
@@ -21,11 +26,10 @@ class CreateNodeActivity : AppCompatActivity() {
     lateinit var viewManager: LinearLayoutManager
     lateinit var viewAdapter: FieldRowAdapter
     companion object {
-        var fields = mutableListOf<Pair<String, String>>()
+        var values = mutableListOf<EditText?>()
+        var keys = mutableListOf<EditText?>()
     }
     lateinit var fieldsRecyclerView: RecyclerView
-    lateinit var keysList: List<EditText>
-    lateinit var valsList: List<EditText>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_node)
@@ -34,7 +38,7 @@ class CreateNodeActivity : AppCompatActivity() {
         fieldsRecyclerView = findViewById(R.id.fieldRowsRecyclerView)
         val constraintLayout = findViewById<ConstraintLayout>(R.id.createNodeLayout)
         viewManager = LinearLayoutManager(this)
-        viewAdapter = FieldRowAdapter(this, fields)
+        viewAdapter = FieldRowAdapter(this, keys)
         fieldsRecyclerView.apply {
             setHasFixedSize(false)
             layoutManager = viewManager
@@ -43,64 +47,59 @@ class CreateNodeActivity : AppCompatActivity() {
     }
 
     fun addField(v: View) {
-        fields.add(Pair("", ""))
+        values.add(null)
+        keys.add(null)
         viewAdapter.notifyDataSetChanged()
 
     }
 
     fun submit(v: View) {
+        submitBtn.isEnabled = false
+        val list = listOf<ContentValues>()
+        val networkNodeBuilder = NetworkNode.newBuilder()
+        val properties = networkNodeBuilder.fieldsMap
+        for (i in 0 until keys.size) {
+            val view = fieldsRecyclerView.getChildAt(i)
+            val keyEditText = view.findViewById<EditText>(R.id.field)
+            val valueEditText = view.findViewById<EditText>(R.id.value)
+            properties[keyEditText.text.toString()] = valueEditText.text.toString()
+        }
+        val nodeResult = MainActivity.dbBlocking.createNode(networkNodeBuilder.build())
+        Toast.makeText(this, "Node ID: " + nodeResult.id.toString(), Toast.LENGTH_SHORT).show()
+
     }
 
 }
 
 public class FieldRowAdapter(
         val context: Context,
-        val dataSet: MutableList<Pair<String, String>>
+        val dataSet: MutableList<EditText?>
     ):
     RecyclerView.Adapter<FieldRowViewHolder>() {
     override fun getItemCount() = dataSet.size
 
     override fun onBindViewHolder(holder: FieldRowViewHolder, position: Int) {
-        holder.listenerPair.first.position = holder.adapterPosition
-        holder.listenerPair.second.position = holder.adapterPosition
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FieldRowViewHolder {
         val viewShida = LayoutInflater.from(parent.context).inflate(R.layout.field_row, parent, false)
-        val keyListener = FieldRowListener()
-        val valueListener = FieldRowListener()
-        return FieldRowViewHolder(viewShida, Pair(keyListener, valueListener))
+        return FieldRowViewHolder(viewShida, dataSet.size-1)
     }
 
 }
 
-class FieldRowListener: TextWatcher {
-    var position = -1
-    override fun afterTextChanged(p0: Editable?) {
 
-    }
 
-    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-    }
+public class FieldRowViewHolder(
+    val view: View,
+    val index: Int
+): RecyclerView.ViewHolder(view) {
 
-    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-    }
-
-    fun changePosition(position: Int) {
-
-    }
-
-}
-
-public class FieldRowViewHolder(val view: View, val listenerPair: Pair<FieldRowListener, FieldRowListener>): RecyclerView.ViewHolder(view) {
-    lateinit var fieldPair: Pair<String, String>
     init {
         val fieldName = view.findViewById<EditText>(R.id.field)
         val fieldValue = view.findViewById<EditText>(R.id.value)
-        fieldName.addTextChangedListener(listenerPair.first)
-        fieldValue.addTextChangedListener(listenerPair.second)
     }
 }
 
